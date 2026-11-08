@@ -2,18 +2,20 @@
 
 AI Workforce Curriculum · Level 20 · [learning](https://github.com/ai-workforce-curriculum/ai-augmented-analyst-learning) · [solutions](https://github.com/ai-workforce-curriculum/ai-augmented-analyst-solutions)
 
-_Generated 2026-11-03 by `aicg org completeness`._
+_Generated 2026-11-08 by `aicg org completeness`._
 
 **Overall: 0%**
 
 | | Progress | Count |
 |---|---|---|
-| Learning | `░░░░░░░░░░` 0% | 0/0 modules complete |
-| Solutions | `░░░░░░░░░░` 0% | 0/0 exercises solved |
+| Learning | `░░░░░░░░░░` 0% | 0/1 modules complete |
+| Solutions | `░░░░░░░░░░` 0% | 0/1 exercises solved |
 
 ## Modules
 
-No modules yet. The pipeline seeds a curriculum plan for this role and writes the modules on its next fill run.
+| Module | Status | Words | Chapters | Exercises | Quiz | Solutions |
+|---|---|---|---|---|---|---|
+| `mod-001-briefing-the-model-for-analysis` | 🟡 Skeleton | 1,739 | 0 | 1 | — | 0/1 |
 
 ## How this is calculated
 
