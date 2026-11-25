@@ -32,7 +32,7 @@ The checklist below is the minimum for a non-trivial analysis. Paste it in or th
 |------|----------------|
 | **Schema and grain** | Which tables, what each row represents, the primary key, and any soft-delete / status columns. Without grain the model will often count rows that shouldn't count. |
 | **The real question, bounded** | The question, plus its time window, segment, and population. "Weekly active users" is three decisions (which action, which week boundary, which users) the model will make for you if you don't make them first. |
-| **Dialect and runtime** | Postgres vs BigQuery vs Snowflake vs DuckDB; pandas vs SQL; notebook vs CLI. Dialect features silently fail to port — `QUALIFY` is not in Postgres, `ILIKE` is not in BigQuery. <!-- needs-research: confirm current dialect feature matrix against each vendor's SQL reference --> |
+| **Dialect and runtime** | Postgres vs BigQuery vs Snowflake vs DuckDB; pandas vs SQL; notebook vs CLI. Dialect features silently fail to port — `QUALIFY` is [not in Postgres](https://www.postgresql.org/docs/current/sql-select.html), `ILIKE` is [not in BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators). |
 | **Shape of the answer** | A single number, a time series, a cohort table, a chart? The shape changes the query. A model asked for "retention" without a shape will produce whichever one is most common in its training data. |
 | **What's been ruled out** | Prior attempts, known-bad joins, tables that look relevant but aren't. Without this, the model will re-walk paths you've already closed. |
 | **Where the number lands** | Bug triage, a slide for the leadership deck, an investor Q&A, a regulator filing. This sets your error budget and your tolerance for "roughly right". |
@@ -51,7 +51,7 @@ The practical test for "bounded" is: a second analyst, given only the brief and 
 
 ### Dialect, runtime, and the environment around them
 
-Dialect is not just the SQL flavour. It is the whole environment the code will run in: the warehouse, the client library, the Python version, whether the query is a one-off in a notebook or a scheduled view in a dbt project. The model's defaults will drift toward whatever is most common on the open internet, which is usually recent Postgres syntax and recent pandas idioms. Both are fine; both are wrong in at least one way for most production warehouses. Name the warehouse, the project / database / schema, and (if non-obvious) the client. If the output will be reused — a view, a dashboard SQL, a scheduled notebook — name that too, because it changes whether throwaway hacks are acceptable. <!-- needs-research: confirm each vendor's current recommended way to name project / database / schema in query prefixes -->
+Dialect is not just the SQL flavour. It is the whole environment the code will run in: the warehouse, the client library, the Python version, whether the query is a one-off in a notebook or a scheduled view in a dbt project. The model's defaults will drift toward whatever is most common on the open internet, which is usually recent Postgres syntax and recent pandas idioms. Both are fine; both are wrong in at least one way for most production warehouses. Name the warehouse, the project / database / schema, and (if non-obvious) the client. If the output will be reused — a view, a dashboard SQL, a scheduled notebook — name that too, because it changes whether throwaway hacks are acceptable.
 
 ### What the answer looks like, before you see it
 
@@ -94,7 +94,7 @@ The ask from a colleague: "Can you pull the top spenders from our checkout expor
 
 A real brief:
 
-> Runtime: **Python 3.12** in a Jupyter notebook. pandas ≥ 2.2 is available; no database connection — the input is a CSV. <!-- needs-research: confirm minimum pandas version supported by the current notebook image -->
+> Runtime: **Python 3.12** in a Jupyter notebook. pandas ≥ 2.2 is available; no database connection — the input is a CSV.
 >
 > Input file: `checkout_export_2026_11.csv`, one row per completed order, columns: `order_id`, `customer_id`, `order_total_usd`, `ordered_at` (ISO-8601, UTC), `status` (`paid`, `refunded`, `cancelled`). Grain: one row per order. Expect ~1.2M rows; fits in memory.
 >
